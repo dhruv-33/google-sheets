@@ -47,14 +47,15 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const [showFunctions, setShowFunctions] = useState(false);
     const [showInsertMenu, setShowInsertMenu] = useState(false);
     const [showDeleteMenu, setShowDeleteMenu] = useState(false);
-    const [theme, setTheme] = useState<"light" | "dark">(() => {
-        if (typeof window !== "undefined") {
-            const saved = localStorage.getItem("theme");
-            if (saved === "light" || saved === "dark") return saved;
-            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        return "light";
-    });
+    const [theme, setTheme] = useState<"light" | "dark">("light");
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        setTheme(saved === "dark" || (!saved && prefersDark) ? "dark" : "light");
+        setIsMounted(true);
+    }, []);
 
     const functionRef = useRef<HTMLDivElement>(null);
     const insertRef = useRef<HTMLDivElement>(null);
@@ -63,19 +64,20 @@ const Toolbar: React.FC<ToolbarProps> = ({
     const btnClass = (active: boolean) =>
         `rounded px-1 py-0.5 ${active ? "bg-blue-200 dark:bg-blue-500" : "hover:bg-gray-300 dark:hover:bg-neutral-700"} cursor-pointer text-black dark:text-white`;
 
-    const createColorPicker = (
-        type: "text" | "background",
-        Icon: JSX.Element,
-        onChange: (color: string) => void
-    ) => {
+    const ColorPickerButton: React.FC<{
+        type: "text" | "background";
+        Icon: JSX.Element;
+        active: boolean;
+        onChange: (color: string) => void;
+    }> = ({ type, Icon, active, onChange }) => {
         const ref = useRef<HTMLInputElement>(null);
-        const isActive = !!(type === "text" ? activeFormats.textColor : activeFormats.backgroundColor);
+
         return (
             <div className="relative">
                 <button
                     title={type === "text" ? "Text Color" : "Background Color"}
                     onClick={() => ref.current?.click()}
-                    className={btnClass(isActive)}
+                    className={`rounded px-1 py-0.5 ${active ? "bg-blue-200 dark:bg-blue-500" : "hover:bg-gray-300 dark:hover:bg-neutral-700"} cursor-pointer text-black dark:text-white`}
                 >
                     {Icon}
                 </button>
@@ -88,6 +90,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
             </div>
         );
     };
+
 
     // Hide dropdowns when clicking outside
     useEffect(() => {
@@ -167,8 +170,22 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 <button title="Align Right (Ctrl+R)" onClick={() => onAlign("right")} className={btnClass(activeFormats.align === "right")}><AlignRight size={20} /></button>
 
                 <span>|</span>
-                {createColorPicker("text", <Baseline size={20} />, onTextColorChange)}
-                {createColorPicker("background", <PaintBucket size={20} />, onBackgroundColorChange)}
+                {/* {createColorPicker("text", <Baseline size={20} />, onTextColorChange)}
+                {createColorPicker("background", <PaintBucket size={20} />, onBackgroundColorChange)} */}
+
+                <ColorPickerButton
+                    type="text"
+                    Icon={<Baseline size={20} />}
+                    active={!!activeFormats.textColor}
+                    onChange={onTextColorChange}
+                />
+                <ColorPickerButton
+                    type="background"
+                    Icon={<PaintBucket size={20} />}
+                    active={!!activeFormats.backgroundColor}
+                    onChange={onBackgroundColorChange}
+                />
+
 
                 <span>|</span>
                 {/* Insert Controls */}
@@ -224,13 +241,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
                 </div>
                 <span>|</span>
                 {/* Theme Toggle Button */}
-                <button
+                {isMounted && (<button
                     title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
                     onClick={toggleTheme}
                     className={btnClass(false)}
                 >
                     {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
+                </button>)}
             </div>
 
             {/* Formula Bar */}
