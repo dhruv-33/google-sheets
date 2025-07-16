@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧮 Google Sheets Clone
+A fully interactive, web-based spreadsheet application inspired by Google Sheets, built with Next.js, React, and Tailwind CSS. This clone replicates core spreadsheet functionality including multi-sheet support, formula evaluation, and rich cell formatting—all running in the browser with persistent state.
 
-## Getting Started
+## 🧱 Tech Stack
 
-First, run the development server:
+- Next.js – React Framework (App Router)
+- Tailwind CSS – Utility-first styling
+- Local state – State management
+- localStorage – Data persistence
+
+## ✅ Features
+
+1. Multiple sheets (add, switch between sheets)
+2. Spreadsheet grid with resizable rows and columns
+3. Cell formatting:  Undo/redo, bold, italic, strikethrough, text alignment, Zoom in/out on the grid and Text and background color for cells
+4. Formula bar with support for basic functions: `SUM`, `AVERAGE`, `COUNT`, `MAX`, `MIN`
+5. Download sheet data as CSV or JSON
+6. Data persistence using localStorage
+7. Theme Toggle : Switch between Light and Dark themes.
+
+## ⚙️ Setup Instructions
+
+1. Clone the repo
+```bash
+git clone https://github.com/dhruv-33/google-sheets.git
+cd google-sheets
+```
+
+2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Start the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Open [http://localhost:3000](http://localhost:3000) in your browser to use the spreadsheet.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🖼️ Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Main UI
+- Main UI :
+![Main UI](public/Images/Light_Layout.png)
+![Main UI](public/Images/Dark_Layout.png)
 
-## Learn More
+### 2. Cell Formats
+- Cell Formats :
+![Cell Formats](public/Images/Cell_Formats.png)
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Functions :
+- Sum Function :
+![Sum Function](public/Images/Sum_Func.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Average Function :
+![Average Function](public/Images/Average_Func.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Count Function :
+![Count Function](public/Images/Count_Func.png)
 
-## Deploy on Vercel
+- Max Function :
+![Max Function](public/Images/Max_Func.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Min Function :
+![Min Function](public/Images/Min_Func.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Download Function :
+![Download Function](public/Images/Download.png)
+
+### 4. Multiple Sheets
+- Multiple Sheets :
+![Multiple Sheeta](public/Images/Multiple_Sheets.png)
+
+### 5. Save Content
+- Save Content in Localstorage : 
+![Save Content](public/Images/Local_Storage.png)
+
+### 6. Theme
+- Dark Theme :
+![Dark Theme](public/Images/Dark_Mode.png)
+
+- Light Theme :
+![Light Theme](public/Images/Light_Mode.png)
+
+## 🙌 Contributions
+- Feel free to fork the repo, raise issues, and submit pull requests.
+
+## 🧑‍💻 Usage Tips
+- Click any cell to edit its value or formula.
+- Use the formula bar to type formulas (e.g., =SUM(B2:B6)).
+- Format selected cells using the toolbar.
+- Add/remove rows, columns, or entire sheets with ease.
+- Export your sheet as .csv or .json.
+
+## 📜 License
+
+This project is for learning and demonstration purposes only.
+
+🚀 Happy Coding! 🎉
